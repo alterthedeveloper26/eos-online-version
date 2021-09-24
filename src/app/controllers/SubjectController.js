@@ -1,7 +1,8 @@
 const SubjectModel = require("../models/Subject");
-const success = require("../../helper/format-response");
+const { success } = require("../../helper/format-response");
 
 class SubjectController {
+  // [GET] /subject/questions
   getAllQuestions(req, res, next) {
     SubjectModel.find()
       .then((subjects) => {
