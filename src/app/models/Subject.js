@@ -15,6 +15,10 @@ const subjectSchema = new Schema({
   questions: [questionSchema],
 });
 
+subjectSchema.query.onlyQuestions = function () {
+  return this.select(["questions"]);
+};
+
 const SubjectModel = mongoose.model("subject", subjectSchema);
 
 module.exports = SubjectModel;

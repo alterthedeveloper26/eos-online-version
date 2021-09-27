@@ -1,5 +1,5 @@
 const JWT = require("jsonwebtoken");
-const { TOKEN } = require("../constant/token");
+const { TOKEN, JWT_SECRET, JWT_REFRESH_SECRET } = require("../constant/token");
 
 const encodedToken = (userId) => {
   return JWT.sign(
@@ -13,4 +13,16 @@ const encodedToken = (userId) => {
   );
 };
 
-module.exports = { encodedToken };
+const encodedRefreshToken = (userId) => {
+  return JWT.sign(
+    {
+      iss: "Alter the developer", //Person who produce
+      sub: userId,
+      iat: new Date().getTime(),
+    },
+    JWT_REFRESH_SECRET,
+    { expiresIn: TOKEN.REFRESH_TOKEN_EXPIRED }
+  );
+};
+
+module.exports = { encodedToken, encodedRefreshToken };

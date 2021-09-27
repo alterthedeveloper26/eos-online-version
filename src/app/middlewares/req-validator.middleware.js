@@ -80,7 +80,7 @@ const validateForm = (schema) => {
 
     if (result.error) {
       return res.status(400).json({
-        message: `${result.error.details[0].path} fail validation!!!`,
+        message: `${result.error.details[0].path} is in wrong format!!!`,
       });
     } else {
       next();

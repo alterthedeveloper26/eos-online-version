@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../app/controllers/UserController");
 const {
+  authorizeAdminOnly,
+} = require("../app/middlewares/authorization.middleware");
+const {
   validateForm,
   validateParam,
   loginSchema,
@@ -12,14 +15,22 @@ const {
 
 router
   .route("/:id")
-  .get(validateParam(validIdSchema, "id"), userController.getAUser)
+  .get(
+    authorizeAdminOnly(),
+    validateParam(validIdSchema, "id"),
+    userController.getAUser
+  )
   .put(
     validateParam(validIdSchema, "id"),
     validateForm(updateSchema),
     userController.update
   )
-  .delete(validateParam(validIdSchema, "id"), userController.delete);
+  .delete(
+    authorizeAdminOnly(),
+    validateParam(validIdSchema, "id"),
+    userController.delete
+  );
 
-router.get("/", userController.getAll);
+router.get("/", authorizeAdminOnly(), userController.getAll);
 
 module.exports = router;
