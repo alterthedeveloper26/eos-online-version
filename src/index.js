@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path"); //For __dirname
-const logger = require("morgan"); //For logger
+const morgan = require("morgan"); //For logger
+const logger = require("./helper/logger");
 const multer = require("multer"); //For form parser
 const passport = require("passport");
 // const bodyParser = require("body-parser");
@@ -29,7 +30,7 @@ app.use(forms.array());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(passport.initialize());
-app.use(logger("dev"));
+app.use(morgan("dev", { stream: logger.stream }));
 
 //Route
 route(app);
@@ -38,9 +39,8 @@ route(app);
 app.use(notfoundHandler);
 app.use(errorHandler);
 
-// const port = process.env.PORT || 3000;
-const port = 3000;
+const port = process.env.PORT || 3000;
 //Start the server
 app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
+  logger.info(`App listening at http://localhost:${port}`);
 });

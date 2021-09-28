@@ -1,17 +1,16 @@
 const SubjectModel = require("../models/Subject");
 const ScoreModel = require("../models/Score");
-const { success } = require("../../helper/format-response");
+const UserModel = require("../models/User");
 const _ = require("lodash");
 
 class SubjectController {
-  // [GET] /subject/questions
-  getAllQuestions(req, res, next) {
-    SubjectModel.find()
-      .then((subjects) => {
-        console.log(subjects);
-        success(res, subjects);
-      })
-      .catch(next);
+  //[GET] /subject/questions
+  async getAllQuestions(req, res, next) {
+    try {
+      const questions = SubjectModel.find();
+    } catch (err) {
+      next(err);
+    }
   }
 
   // [POST] /subject/submission
@@ -44,9 +43,7 @@ class SubjectController {
         user: req.user._id,
       });
 
-      score.save().then(() => {
-        console.log("Save succesfully!");
-      });
+      await score.save();
 
       return res.status(200).json({
         message: "Submit successfully!",

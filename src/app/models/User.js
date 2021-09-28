@@ -9,6 +9,7 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   isAdmin: { type: Boolean, default: false },
   isEmailVerified: { type: Boolean, default: false },
+  scores: [{ type: Schema.Types.ObjectId, ref: "Score" }],
 });
 
 userSchema.method("validateUser", async function (password) {
