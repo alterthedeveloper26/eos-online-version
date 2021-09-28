@@ -1,0 +1,10 @@
+THIS PROJECT IS FOR PRACTICE PURPOSE
+THIS INCLUDE SOME OF THE FOLLOWING PRACTICAL IMPLEMENTATION
+
+- REST API
+- Middle ware
+- Mongoose
+- JWT
+- passport
+- sendgrid
+- salt and encryption
