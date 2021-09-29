@@ -1,7 +1,7 @@
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const { VERIFICATION_ENDPOINT } = require("../constant/sendEmail");
+const { VERIFICATION_ENDPOINT } = require("../../constant/sendEmail");
 
 const sendVerificationEmail = async (userEmail, code) => {
   const msg = {

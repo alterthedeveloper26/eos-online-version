@@ -1,27 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const {
-  checkValidRefreshToken,
-} = require("../app/middlewares/authorization.middleware");
-const AuthController = require("../app/controllers/AuthController");
-const passport = require("../app/middlewares/passport.middleware");
+const { checkValidRefreshToken } = require("../app/middlewares/authorize");
+const AuthController = require("../app/controllers/auth.controller");
 
-const {
-  validateForm,
-  loginSchema,
-  signUpSchema,
-  validIdSchema,
-  updateSchema,
-} = require("../app/middlewares/req-validator.middleware");
+const passport = require("../app/middlewares/passport");
+const validate = require("../app/middlewares/validate");
+
+const { login, register } = require("../app/validations/auth.validation");
 
 router.post(
   "/login",
-  validateForm(loginSchema),
+  validate(login),
   passport.authenticate("local", { session: false }),
   AuthController.login
 );
 
-router.post("/register", validateForm(signUpSchema), AuthController.signup);
+router.post("/register", validate(register), AuthController.signup);
 
 router.post(
   "/refresh-token",

@@ -1,5 +1,9 @@
 const JWT = require("jsonwebtoken");
-const { TOKEN, JWT_SECRET, JWT_REFRESH_SECRET } = require("../constant/token");
+const {
+  TOKEN,
+  JWT_SECRET,
+  JWT_REFRESH_SECRET,
+} = require("../../constant/token");
 
 const encodedToken = (userId) => {
   return JWT.sign(

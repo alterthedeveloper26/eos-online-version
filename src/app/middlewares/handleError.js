@@ -10,19 +10,10 @@ const errorHandler = (err, req, res, next) => {
   const errCode = err.status || 500;
   return res.status(errCode).json({
     error: {
-      code: err.status,
+      code: errCode,
       message: err.message,
     },
   });
 };
 
-const wrapError = (func) => async (req, res, next) => {
-  try {
-    await func(req, res, next);
-  } catch (err) {
-    logger.error(err);
-    next(err);
-  }
-};
-
-module.exports = { notfoundHandler, errorHandler, wrapError };
+module.exports = { notfoundHandler, errorHandler };

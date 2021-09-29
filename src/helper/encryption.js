@@ -6,4 +6,4 @@ const encryptPassword = async (password) => {
   return hashedPassword;
 };
 
-module.exports = { encryptPassword };
+module.exports = encryptPassword;

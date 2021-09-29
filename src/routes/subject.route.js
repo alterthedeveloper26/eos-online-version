@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const subjectController = require("../app/controllers/SubjectController");
-const passport = require("../app/middlewares/passport.middleware");
+
+const subjectController = require("../app/controllers/subject.controller");
+
+const passport = require("../app/middlewares/passport");
 
 router.get(
   "/questions",
-  passport.authenticate("local", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   subjectController.getAllQuestions
 );
 router.get("/mockup", subjectController.createTestData);

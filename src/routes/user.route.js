@@ -1,35 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../app/controllers/UserController");
-const {
-  authorizeAdminOnly,
-} = require("../app/middlewares/authorization.middleware");
-const {
-  validateForm,
-  validateParam,
-  loginSchema,
-  signUpSchema,
-  validIdSchema,
-  updateSchema,
-} = require("../app/middlewares/req-validator.middleware");
+const passport = require("../app/middlewares/passport");
+const userController = require("../app/controllers/user.controller");
+const { authorizeAdminOnly } = require("../app/middlewares/authorize");
+const validate = require("../app/middlewares/validate");
+const { RD, update } = require("../app/validations/user.validation");
 
 router
   .route("/:id")
-  .get(
-    authorizeAdminOnly(),
-    validateParam(validIdSchema, "id"),
-    userController.getAUser
-  )
+  .get(authorizeAdminOnly(), validate(RD), userController.getAUser)
   .put(
-    validateParam(validIdSchema, "id"),
-    validateForm(updateSchema),
+    passport.authenticate("jwt", { session: false }),
+    validate(update),
     userController.update
   )
-  .delete(
-    authorizeAdminOnly(),
-    validateParam(validIdSchema, "id"),
-    userController.delete
-  );
+  .delete(authorizeAdminOnly(), validate(RD), userController.delete);
 
 router.get("/", authorizeAdminOnly(), userController.getAll);
 

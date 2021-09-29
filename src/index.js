@@ -16,7 +16,7 @@ const route = require("./routes/index.route");
 const {
   errorHandler,
   notfoundHandler,
-} = require("./app/middlewares/error-handler.middleware");
+} = require("./app/middlewares/handleError");
 
 //Connect db
 const db = require("./config/db/index");
@@ -30,7 +30,7 @@ app.use(forms.array());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(passport.initialize());
-app.use(morgan("dev", { stream: logger.stream }));
+app.use(morgan("tiny", { stream: logger.stream }));
 
 //Route
 route(app);
