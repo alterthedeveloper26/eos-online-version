@@ -2,7 +2,7 @@ const Joi = require("joi");
 const { password, name } = require("./custom.validation");
 
 const register = {
-  body: Joi.object({
+  body: Joi.object().keys({
     email: Joi.string()
       .email({
         minDomainSegments: 2,
@@ -17,7 +17,7 @@ const register = {
 };
 
 const login = {
-  body: Joi.object({
+  body: Joi.object().keys({
     email: Joi.string()
       .email({
         minDomainSegments: 2,
@@ -29,34 +29,34 @@ const login = {
 };
 
 const logout = {
-  body: Joi.object({
+  body: Joi.object().keys({
     refreshToken: Joi.string().required(),
   }),
 };
 
 const refreshTokens = {
-  body: Joi.object({
+  body: Joi.object().keys({
     refreshToken: Joi.string().required(),
   }),
 };
 
 const forgotPassword = {
-  body: Joi.object({
+  body: Joi.object().keys({
     email: Joi.string().email().required(),
   }),
 };
 
 const resetPassword = {
-  query: Joi.object({
+  query: Joi.object().keys({
     token: Joi.string().required(),
   }),
-  body: Joi.object({
+  body: Joi.object().keys({
     password: Joi.string().required().custom(password),
   }),
 };
 
 const verifyEmail = {
-  query: Joi.object({
+  query: Joi.object().keys({
     token: Joi.string().required(),
   }),
 };

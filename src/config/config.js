@@ -1,12 +1,11 @@
 const dotenv = require("dotenv");
 const path = require("path");
 const Joi = require("joi");
+const pick = require("../helper/pick");
 
 dotenv.config({ path: path.join(__dirname, "../../.env") });
 
-const env = process.env;
-
-const envVarsSchema = Joi.object().keys({
+const option = {
   NODE_ENV: Joi.string().valid("production", "development", "test").required(),
   PORT: Joi.number().default(3000),
   BASE_URL: Joi.string().required(),
@@ -16,15 +15,20 @@ const envVarsSchema = Joi.object().keys({
   TOKEN_EXPIRED: Joi.string().alphanum().required(),
   REFRESH_TOKEN_EXPIRED: Joi.string().alphanum().required(),
   SENDGRID_API_KEY: Joi.string().required(),
-});
+};
 
+const envVarsSchema = Joi.object().keys({ option });
+
+const env = pick(process.env, Object.keys(option));
 const { value: envVars, error } = envVarsSchema.validate(env, {
   errors: { label: "key" },
+  allowUnknown: true,
 });
 
-// if (error) {
-//   throw new Error(`Config validation error: ${error.message}`);
-// }
+if (error) {
+  console.log(error);
+  throw new Error(`Config validation error: ${error.message}`);
+}
 
 module.exports = {
   env: envVars.NODE_ENV,

@@ -2,7 +2,7 @@ const Joi = require("joi");
 const { objectId, name, password } = require("./custom.validation");
 
 const update = {
-  body: Joi.object({
+  body: Joi.object().keys({
     email: Joi.string().email({
       minDomainSegments: 2,
       tlds: { allow: ["com", "net"] },
@@ -16,7 +16,7 @@ const update = {
 };
 
 const RD = {
-  params: Joi.object({
+  params: Joi.object().keys({
     id: Joi.string().required().custom(objectId),
   }),
 };
