@@ -19,7 +19,7 @@ const {
 } = require("./app/middlewares/handleError");
 
 //Connect db
-const db = require("./config/db/index");
+const db = require("./config/mongo");
 db.connect();
 
 //Middleware

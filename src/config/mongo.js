@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+const config = require("./config");
 async function connect() {
   try {
-    await mongoose.connect("mongodb://localhost:27017/eos_online_version", {
+    await mongoose.connect(config.mongoose.url, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       //   useFindAndModify: false,
